@@ -63,7 +63,7 @@ jobs:
             type=pep440,pattern={{major}}
             type=sha
             type=sha,format=long
-            type=sha,format=long,prefix={{branch}}{{base_ref}}-,suffix=-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
+            type=sha,format=long,prefix={{branch}}{{base_ref}}{{tag}}-,suffix=-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
 
       # type=raw,value=${{ github.head_ref }}-${{ github.sha }}-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
 
