@@ -65,7 +65,7 @@ jobs:
             type=sha,format=long
             type=sha,format=long,prefix={{branch}}{{base_ref}}{{tag}}-,suffix=-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
 
-      # type=raw,value=${{ github.head_ref }}-${{ github.sha }}-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
+      # TODO: as soon as we can introduce the source ref for merge requests here, we should add it. As of now, Merge Requests pointing to master always have their prefix set to master. Yet we want it to be set after the MR source branch name. E.g. feat/xyz
 
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
       # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
@@ -78,9 +78,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          #cache-from: type=gha
-          #cache-to: type=gha,mode=max
-
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
