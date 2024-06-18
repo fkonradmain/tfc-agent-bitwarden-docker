@@ -3,7 +3,7 @@ name: Build Image and publish it to Github GHCR Docker Registry
 # Configures this workflow to run every time a change is pushed to the branch called `release`.
 on:
   schedule:
-    - cron: '17 6 * * *'
+    - cron: '22 3 * * 3'
   push:
     branches: [ "master" ]
     # Publish semver tags as releases.
@@ -55,7 +55,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=schedule
-            type=schedule,pattern={{date 'YYYY-MM-DDZHH:mm:ss' tz='UTC'}}
+            type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='UTC'}}
             type=ref,event=branch
             type=ref,event=pr
             type=pep440,pattern={{version}}
@@ -63,7 +63,7 @@ jobs:
             type=pep440,pattern={{major}}
             type=sha
             type=sha,format=long
-            type=sha,format=long,suffix={{date 'YYYY-MM-DDZHH:mm:ss' tz='UTC'}}
+            type=sha,format=long,prefix={{branch}},suffix={{date 'YYYYMMDD-HHmmss' tz='UTC'}}
 
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
       # It uses the `context` parameter to define the build's context as the set of files located in the specified path. For more information, see "[Usage](https://github.com/docker/build-push-action#usage)" in the README of the `docker/build-push-action` repository.
