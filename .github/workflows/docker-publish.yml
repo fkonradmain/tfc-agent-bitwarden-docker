@@ -64,6 +64,7 @@ jobs:
             type=sha
             type=sha,format=long
             type=sha,format=long,prefix={{branch}}{{base_ref}}{{tag}}-,suffix=-{{date 'YYYYMMDD-HHmmss' tz='UTC'}}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
       # TODO: as soon as we can introduce the source ref for merge requests here, we should add it. As of now, Merge Requests pointing to master always have their prefix set to master. Yet we want it to be set after the MR source branch name. E.g. feat/xyz
 
